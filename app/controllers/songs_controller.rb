@@ -25,21 +25,48 @@ class SongsController < ApplicationController
   end
 
   def new
-    @song = Song.new
+    # binding.pry
+    if params[:artist_id]
+      @artist = Artist.find_by(id: params[:artist_id])
+      if @artist
+        @song = Artist.find_by(id: params[:artist_id]).songs.build
+        redirect_to new_artist_song_path(@artist)
+      else
+        redirect_to artists_path
+      end
+    else
+      @song = Song.new
+    end
   end
 
   def create
-    @song = Song.new(song_params)
-
-    if @song.save
-      redirect_to @song
+    if params[:artist_id]
+      @artist = Artist.find_by(id: params[:artist_id])
+      if @artist
+        @song = @artist.songs.create(params[:title])
+        redirect_to artist_song_path(@artist, @song)
+      else
+        redirect_to artists_path
+      end
     else
       render :new
     end
   end
-
+  
   def edit
-    @song = Song.find(params[:id])
+    # binding.pry
+    if params[:artist_id]
+      @artist = Artist.find_by(id: params[:artist_id])
+      if @artist
+        @song = @artist.songs.find_by(id: params[:id])
+        redirect_to artist_songs_path(@artist) unless @song
+      else
+        redirect_to artists_path
+      end
+    else
+      @song = Song.find(params[:id])
+    end
+
   end
 
   def update
