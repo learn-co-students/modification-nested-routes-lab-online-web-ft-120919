@@ -1,4 +1,7 @@
 <%= form_for @song  do |f| %>
+  <% if @artist.nil? %>
+    <%= f.collection_select :artist_id, Artist.all, :id, :name %>
+  <% end %>
   <%= f.label :title %>
   <%= f.text_field :title %><br>
   <%= f.label :artist_name %>
