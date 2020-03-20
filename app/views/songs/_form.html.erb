@@ -1,9 +1,15 @@
 <%= form_for @song  do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title %><br>
-  <%= f.label :artist_name %>
-  <%= f.text_field :artist_name %>
-  <br />
+  %= artist_id_field(@song) %><br>
+  <%= f.label :artist_name %>	
+  <%= f.text_field :artist_name %>	<%= f.label :title %>
+  <br />	
 
-  <%= f.submit %>
-<% end %>
+<%= f.hidden_field :artist_id %>
+  <%= f.submit %>	
+<% end %>	<%= f.text_field :title %><br>
+<%= f.label :artist_name %>
+<%= f.text_field :artist_name %>
+<br />
+
+<%= f.submit %>
+<% end %> 
